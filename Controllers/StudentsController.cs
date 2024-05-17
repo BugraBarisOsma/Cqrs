@@ -43,25 +43,25 @@ namespace Cqrs.Controllers
             var result = await  _mediator.Send(new GetStudentsQuery());
             return Ok(result);
         }
-        //[HttpPost]
-        //public IActionResult Create(CreateStudentCommand command)
-        //{
-        //    this.createStudentCommandHandler.Handle(command);  
-        //    return Created("",command.Name);
-        //}
-        //[HttpDelete("{id}")]
-        //public IActionResult Remove(int id)
-        //{
-        //    this.removeStudentCommandHandler.Handle(new RemoveStudentCommand(id));
-        //    return NoContent();
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateStudentCommand command)
+        {
+            await _mediator.Send(command);
+            return Created("", command.Name);
+        }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Remove(int id)
+        {
+            await _mediator.Send(new RemoveStudentCommand(id));
+            return NoContent();
 
-        //}
-        //[HttpPut]
-        //public IActionResult Update(UpdateStudentCommand command)
-        //{
-        //    this.updateStudentCommandHandler.Handle(command);
-        //    return NoContent();
-        //}
+        }
+        [HttpPut]
+        public async Task<IActionResult> Update(UpdateStudentCommand command)
+        {
+            await _mediator.Send(command);
+            return NoContent();
+        }
 
     }
 }

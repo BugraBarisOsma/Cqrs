@@ -1,9 +1,10 @@
 ﻿using Cqrs.CQRS.Commands;
 using Cqrs.Data;
+using MediatR;
 
 namespace Cqrs.CQRS.Handlers
 {
-    public class RemoveStudentCommandHandler
+    public class RemoveStudentCommandHandler : IRequestHandler<RemoveStudentCommand>
     {
         private readonly StudentContext _studentContext;
 
@@ -12,16 +13,21 @@ namespace Cqrs.CQRS.Handlers
             _studentContext = studentContext;
         }
 
-        public void Handle(RemoveStudentCommand command)
+        public async Task<Unit> Handle(RemoveStudentCommand request, CancellationToken cancellationToken)
         {
-            var deletedEntity = _studentContext.Students.Find(command.Id);
+            var deletedEntity = _studentContext.Students.Find(request.Id);
             _studentContext.Students.Remove(deletedEntity);
-            _studentContext.SaveChanges();
+            await _studentContext.SaveChangesAsync();
+            return Unit.Value;
         }
 
-        public static implicit operator RemoveStudentCommandHandler(RemoveStudentCommand v)
-        {
-            throw new NotImplementedException();
-        }
+        //public void Handle(RemoveStudentCommand command)
+        //{
+        //    var deletedEntity = _studentContext.Students.Find(command.Id);
+        //    _studentContext.Students.Remove(deletedEntity);
+        //    _studentContext.SaveChanges();
+        //}
+
+
     }
 }

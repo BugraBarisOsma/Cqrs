@@ -1,6 +1,8 @@
-﻿namespace Cqrs.CQRS.Commands
+﻿using MediatR;
+
+namespace Cqrs.CQRS.Commands
 {
-    public class UpdateStudentCommand
+    public class UpdateStudentCommand : IRequest
     {
         public int Id { get; set; }
         public string Name { get; set; }

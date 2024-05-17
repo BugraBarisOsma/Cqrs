@@ -24,7 +24,7 @@ namespace Cqrs.CQRS.Handlers
         public async Task<IEnumerable<GetStudentsQueryResult>> Handle(GetStudentsQuery request, CancellationToken cancellationToken)
         {
             return await _context.Students.Select(x => new GetStudentsQueryResult { Name = x.Name, Surname = x.Surname }).AsNoTracking().ToListAsync();
-            throw new NotImplementedException();
+            
         }
     }
 }
